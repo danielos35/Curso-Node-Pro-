@@ -1,4 +1,6 @@
 const http = require('http'); 
+const url = require('url'); 
+
 
 
 /*
@@ -8,9 +10,23 @@ Crear servidor
 */
 
 const server = http.createServer((req,res)=>{
-    console.log(req);
-    console.log(res);
-    res.end('Bienvenido al servidor');
+
+    console.log(req.url);
+    // console.log(req);
+    // console.log(res);
+    
+    const pathName = req.url;
+    if(pathName === '/holaMundo'){
+        res.end('Bienvenido al servidor');
+    }else if(pathName === '/' ||pathName === '/test'){
+        res.end('este es un test')
+    }else{
+        res.writeHead(404,{
+            'Content-type': 'text/html',
+            'encabezadoPropio': 'Hola mundo'
+        })
+        res.end('<h1>Que ruta tan extraña</h1>')
+    }
 })
 
 /*
@@ -22,3 +38,9 @@ Configurar puerto
 server.listen(3000,'127.0.0.1',()=>{
     console.log('escuchando');
 });
+
+/*
+ENRUTAMIENTO
+- Para el enrutamiento usamos el modulo URL
+*/ 
+
