@@ -1,5 +1,6 @@
 const http = require('http'); 
 const url = require('url'); 
+const fs = require('fs'); 
 
 
 
@@ -20,6 +21,17 @@ const server = http.createServer((req,res)=>{
         res.end('Bienvenido al servidor');
     }else if(pathName === '/' ||pathName === '/test'){
         res.end('este es un test')
+    }else if(pathName === '/api'){ 
+        // El root de nuestra ruta, sera donde esté ubicado el index de nuestra app
+        fs.readFile(`${__dirname}/dev-data/data.json`, 'utf-8',  (err,data)=>{
+            console.log(data);
+            let datos =  JSON.parse(data)
+            console.log(datos);
+            res.writeHead(200,{
+                'Content-type':'Application/json'
+            })
+            res.end(data)
+        })
     }else{
         res.writeHead(404,{
             'Content-type': 'text/html',
