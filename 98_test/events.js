@@ -1,6 +1,18 @@
 const EventEmitter = require('events');
+const http = require('http')
+// const myEmitter = new EventEmitter();
 
-const myEmitter = new EventEmitter();
+// Event emmiter para JavaScript es una clase
+
+class Sales extends EventEmitter {
+
+    constructor() {
+        super()
+    }
+
+}
+
+const myEmitter = new Sales();
 
 
 myEmitter.on('newSale', () => {
@@ -17,4 +29,22 @@ myEmitter.on('newSale', (num) => {
 
 myEmitter.emit('newSale', 9);
 
-myEmitter('newSale'); 
+// myEmitter('newSale'); 
+
+
+/////////////////////////
+
+const server = http.createServer();
+server.on('request', (req, res) => {
+    console.log('Recived Request');
+    res.end('Recived Request')
+})
+
+
+server.on('close', (req, res) => {
+    console.log('Recived Request');
+    res.end('Recived Request')
+})
+
+
+server.listen(3000)
