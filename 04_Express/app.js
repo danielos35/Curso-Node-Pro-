@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const app = express();
 
@@ -10,13 +11,27 @@ APP GET
 
 */
 
-app.get('/', (req, res) => {
-  // res.status(200).send('Bienvenido al servidor');
-  res.status(200).json({ mensaje: 'Bienvenido al servidor', app: 'natours' });
-});
+// app.get('/', (req, res) => {
+//   // res.status(200).send('Bienvenido al servidor');
+//   res.status(200).json({ mensaje: 'Bienvenido al servidor', app: 'natours' });
+// });
 
-app.post('/', (req, res) => {
-  res.send('Esta es una solicitud post');
+// app.post('/', (req, res) => {
+//   res.send('Esta es una solicitud post');
+// });
+
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`)
+);
+
+app.get('/api/v1/tours', (req, res) => {
+  res.status(200).json({
+    status: 'Envio exitoso',
+    results: tours.length,
+    data: {
+      tours: tours,
+    },
+  });
 });
 
 // Crear servidor
