@@ -36,6 +36,31 @@ app.get('/api/v1/tours', (req, res) => {
   });
 });
 
+
+app.get('/api/v1/tours/:id', (req, res) => {
+  console.log(req.params);
+
+  const id = +req.params.id;
+  const tour = tours.find((ele) => ele.id === id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'Error',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(200).json({
+    status: 'petición exitosa',
+    data: {
+      tour,
+    },
+  });
+});
+
+
+
+
 app.post('/api/v1/tours', (req, res) => {
   // console.log(req.body);
 
