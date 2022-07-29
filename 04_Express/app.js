@@ -61,13 +61,38 @@ app.get('/api/v1/tours/:id', (req, res) => {
 
 app.patch('/api/v1/tours/:id', (req, res) => {
   if (+req.params.id > tours.length) {
-    res.status(200).json({
-      status: 'Solicitud exitosa',
+    return res.status(400).json({
+      status: 'Solicitud NO encontrada',
       data: {
-        tour: '<Tour actualizado>',
+        tour: '<error al actualizar el tour>',
       },
     });
   }
+
+  res.status(200).json({
+    status: 'Solicitud exitosa',
+    data: {
+      tour: '<URL Tour actualizado>',
+    },
+  });
+});
+
+app.delete('/api/v1/tours/:id', (req, res) => {
+  if (+req.params.id > tours.length) {
+    return res.status(400).json({
+      status: 'Solicitud NO encontrada',
+      data: {
+        tour: '<error al actualizar el tour>',
+      },
+    });
+  }
+
+  res.status(200).json({
+    status: 'Solicitud exitosa',
+    data: {
+      tour: null,
+    },
+  });
 });
 
 
