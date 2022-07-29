@@ -59,6 +59,18 @@ app.get('/api/v1/tours/:id', (req, res) => {
 });
 
 
+app.patch('/api/v1/tours/:id', (req, res) => {
+  if (+req.params.id > tours.length) {
+    res.status(200).json({
+      status: 'Solicitud exitosa',
+      data: {
+        tour: '<Tour actualizado>',
+      },
+    });
+  }
+});
+
+
 
 
 app.post('/api/v1/tours', (req, res) => {
