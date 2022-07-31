@@ -3,6 +3,10 @@ const tourController = require('./../controllers/tourController');
 
 const router = express.Router();
 
+
+// MIDDLEWARE PERSONALIZADO
+router.param('id', tourController.checkID);
+
 router
   .route('/')
   .get(tourController.getALLTours)
