@@ -10,4 +10,13 @@ ARGUMENTOS
 - #2 res
 - #3 next
 - #4 value
+
+
+
+NOTAS 
+
+
+-  Los middleware también puden ser encadenados, dependiendo la necesidad, y se reciben como otro argumento dentro de la petición
+
+  .post(tourController.checkBody, tourController.createTour);
 */
