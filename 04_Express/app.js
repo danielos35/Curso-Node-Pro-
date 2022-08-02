@@ -7,8 +7,13 @@ const userRouter = require('./routes/userRoutes');
 const app = express();
 
 //MIDDLEWARE....................................................
-app.use(morgan('dev'));
+
+// condicionar mediante variables de entorno
+if(process.env.NODE_ENV === 'development'){
+  app.use(morgan('dev'));
+}
 app.use(express.json());
+app.use(express.static(`${__dirname}/public`));
 
 // Middleware personalizado
 app.use((req, res, next) => {
