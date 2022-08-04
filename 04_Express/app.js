@@ -9,7 +9,7 @@ const app = express();
 //MIDDLEWARE....................................................
 
 // condicionar mediante variables de entorno
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 app.use(express.json());
@@ -29,6 +29,5 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
-
 
 module.exports = app;
