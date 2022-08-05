@@ -1,7 +1,25 @@
+// Configurar mongo
+const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 // Ruta de nuestro archivo de configuración (Debe estar antes de la importación de la app)
 dotenv.config({ path: './config.env' });
+
+const DB = process.env.DATABASE.replace(
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose
+  .connect(DB, {
+    useNewUrlPArse: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(() => {
+    console.log('Conectado de manera exitosa');
+  });
+
 const app = require('./app');
 
 // Ver entorno en el que nos encontramos
