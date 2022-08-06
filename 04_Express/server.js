@@ -22,6 +22,41 @@ mongoose
 
 const app = require('./app');
 
+// Esquema para mongoose
+const tourShema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'A tour must have a name'],
+    unique: true,
+  },
+  rating: {
+    type: Number,
+    default: 4.5,
+  },
+  price: {
+    type: Number,
+    required: [true, 'A tour must have a price'],
+  },
+});
+
+// Modulo del schema
+const Tour = mongoose.model('Tour', tourShema);
+
+const testTour = new Tour({
+  name: 'The forest',
+  rating: 4.7,
+  price: 497,
+});
+
+testTour
+  .save()
+  .then((doc) => {
+    console.log(doc);
+  })
+  .catch((err) => {
+    console.log('Este es un error', err);
+  });
+
 // Ver entorno en el que nos encontramos
 console.log(app.get('env'));
 

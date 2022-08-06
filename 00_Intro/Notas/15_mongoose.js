@@ -6,5 +6,7 @@ MONGOOSE
 - Forma de escribir JavScript code para interactuar con la base de datos
 
 
+CONVENCIONES
 
+- Los modelos se acostumbran siempre nombrar con mayuscula 'Modelo'
 */
