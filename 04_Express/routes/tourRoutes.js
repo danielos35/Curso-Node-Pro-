@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 // MIDDLEWARE PERSONALIZADO
-router.param('id', tourController.checkID);
+// router.param('id', tourController.checkID);
 
 router
   .route('/')
