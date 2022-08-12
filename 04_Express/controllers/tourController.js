@@ -72,11 +72,20 @@ exports.updateTour = async (req, res) => {
   }
 };
 
-exports.deleteTour = (req, res) => {
-  res.status(200).json({
-    status: 'Solicitud exitosa',
-    data: {
-      tour: null,
-    },
-  });
+exports.deleteTour = async (req, res) => {
+  try {
+    const tour = await Tour.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({
+      status: 'Solicitud de eliminación exitosa',
+      data: {
+        tour,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: 'Error al eliminar la información',
+      message: err,
+    });
+  }
 };
