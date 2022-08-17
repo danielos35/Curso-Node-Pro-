@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 
 // Ruta de nuestro archivo de configuración (Debe estar antes de la importación de la app)
 dotenv.config({ path: './config.env' });
+const app = require('./app');
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
@@ -20,7 +21,6 @@ mongoose
     console.log('Conectado de manera exitosa');
   });
 
-const app = require('./app');
 
 /* 
 - Modulo del schema
