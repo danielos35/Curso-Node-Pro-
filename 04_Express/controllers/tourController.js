@@ -1,4 +1,5 @@
 const Tour = require('./../models/tourModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.aliasTopTours = async (req, res, next) => {
   req.query.limit = '5';
@@ -9,65 +10,14 @@ exports.aliasTopTours = async (req, res, next) => {
 
 exports.getALLTours = async (req, res) => {
   try {
-    console.log(req.query);
-    // Filtro #1
-    // const tours = await Tour.find({
-    //   duration: 5,
-    //   difficulty: 'easy',
-    // });
+    // Ejecución query
+    const features = new APIFeatures(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
 
-    // Filtro #2
-    // const tours = await Tour.find()
-    //   .where('duration')
-    //   .equals(5)
-    //   .where('difficulty')
-    //   .equals('easy');
-
-    const queryObj = { ...req.query };
-    const excludedFields = ['page', 'sort', 'limit', 'fields'];
-    excludedFields.forEach((el) => delete queryObj[el]);
-
-    // Construir query
-
-    // FILTRO AVANZADO
-    let queryString = JSON.stringify(queryObj);
-    queryString = queryString.replace(
-      /\b(gte|gt|lte|lt)\b/g,
-      (match) => `$${match}`
-    );
-    console.log(JSON.parse(queryString));
-    let query = Tour.find(JSON.parse(queryString));
-
-    // ORDENAR
-    if (req.query.sort) {
-      const sortBy = req.query.sort.split(',').join('');
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort('-createdAt');
-    }
-
-    // LIMITAR SOLICITUDES
-    if (req.query.fields) {
-      const fields = req.query.fields.split(',').join(' ');
-      query = query.select(fields);
-    } else {
-      query = query.select('-__v');
-    }
-
-    // PAGINAR
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1 || 100;
-    const skip = (page - 1) * limit;
-
-    query = query.skip(skip).limit(limit);
-
-    if (req.query.page) {
-      const numTours = await Tour.countDocuments();
-      if (skip >= numTours) throw new Error('Esta pagino no existe');
-    }
-
-    // Ejecutar query
-    const tours = await query;
+    const tours = await features.query;
 
     res.status(200).json({
       status: 'Consulta exitosa',
@@ -78,8 +28,8 @@ exports.getALLTours = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
-      message: err,
+      status: 'faiel',
+      message: err.message,
     });
   }
 };
