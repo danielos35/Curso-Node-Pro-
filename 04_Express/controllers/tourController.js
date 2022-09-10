@@ -128,7 +128,7 @@ exports.getTourStats = async (req, res) => {
         $sort: { avgPrice: 1 },
       },
       {
-        $match: { _id: { $ne: 'EASY' } },
+        $match: { _id: { $ne: 'EASY ' } },
       },
     ]);
 
@@ -140,6 +140,29 @@ exports.getTourStats = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
+    res.status(404).json({
+      status: 'Error',
+      message: err,
+    });
+  }
+};
+
+exports.getMonthlyPlan = async (req, res) => {
+  try {
+    const year = +req.params.year;
+    const plan = await Tour.aggregate([
+      {
+        $unwind: '$startDates',
+      },
+    ]);
+
+    res.status(200).json({
+      status: 'Solicitud exitosa',
+      data: {
+        plan,
+      },
+    });
+  } catch (err) {
     res.status(404).json({
       status: 'Error',
       message: err,
