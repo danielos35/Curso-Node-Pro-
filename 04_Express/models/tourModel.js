@@ -64,6 +64,10 @@ tourShema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
+tourShema.pre('save', function () {
+  console.log(this);
+});
+
 const Tour = mongoose.model('Tour', tourShema);
 
 module.exports = Tour;
