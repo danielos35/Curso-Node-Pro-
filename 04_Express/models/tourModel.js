@@ -1,9 +1,17 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const validator = require('validator');
 
 // Esquema para mongoose
 const tourShema = new mongoose.Schema(
   {
+    /*
+    
+     VALIDACIONES CON LIBRERIAS
+     - Libreria de validaciones: validator -> https://github.com/validatorjs/validator.js/
+    
+    */
+
     name: {
       type: String,
       required: [true, 'El tour debe tener un nombre'],
@@ -11,6 +19,11 @@ const tourShema = new mongoose.Schema(
       trim: true,
       maxlength: [40, 'El nombre del tour debe tener menos de 40 caracteres'],
       minlength: [10, 'El nombre del tour debe de tener mas de 10 caracteres'],
+      // Validación con libreria validator
+      validate: [
+        validator.isAlpha,
+        'El nombre del tour solo debe contener letras',
+      ],
     },
     slug: String,
     duration: {
