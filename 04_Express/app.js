@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
@@ -30,14 +32,16 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
-
 // Manejar solicitudes inexistentes, (Rutas desconocidas)
-app.all('*', ( req ,res, next ) => {
-  res.status(404).json({
-    status: 'Error', 
-    message: `No pudimos encontrar ${req.originalUrl}`
-  });
-
+app.all('*', (req, res, next) => {
+  next(new AppError(`No pudimos encontrar ${req.originalUrl}`, 404));
 });
+
+/*
+Manejo de errores
+- Para identificarlo debemos enviarle cuatro argumentos, automaticamente reconocerá que es un middleware de error
+*/
+
+app.use(globalErrorHandler);
 
 module.exports = app;

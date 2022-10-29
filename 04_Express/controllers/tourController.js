@@ -183,7 +183,7 @@ exports.getMonthlyPlan = async (req, res) => {
         },
       },
       {
-        $limit: 6,
+        $limit: 6, 
       },
     ]);
 
