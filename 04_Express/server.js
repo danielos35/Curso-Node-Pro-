@@ -2,6 +2,13 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+// Errores asincronos
+process.on('uncaughtException', err=>{
+  console.log(err.name, err.message);
+  process.exit(1);
+})
+
+
 // Ruta de nuestro archivo de configuración (Debe estar antes de la importación de la app)
 dotenv.config({ path: './config.env' });
 const app = require('./app');
@@ -20,7 +27,6 @@ mongoose
   .then(() => {
     console.log('Conectado de manera exitosa');
   });
-
 
 /* 
 - Modulo del schema
@@ -50,6 +56,14 @@ console.log(app.get('env'));
 console.log(process.env);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App running in port ${port}`);
+});
+
+// Errores sincronos
+process.on('unhandledRejection', (err) => {
+  console.log(err);
+  server.close(() => {
+    process.exit(1);
+  });
 });
