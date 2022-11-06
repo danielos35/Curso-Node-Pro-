@@ -21,6 +21,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Ingrese una contraseña'],
     minlength: 8,
+    // Al colocar select false no sé muestra los datos
+    select: false,
   },
   passwordConfirm: {
     type: String,
