@@ -30,7 +30,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.login = (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   // 1. Verificar si email y contraseña existen
@@ -39,12 +39,16 @@ exports.login = (req, res, next) => {
   }
 
   // 2. verificar si el usuario existe y la contraseña es correcta
-  const user = User.findOne({ email });
+  const user = await User.findOne({ email }).select('+password');
+  // console.log(user);
 
   // 3. Si todo es OK, enviar un token al cliente
   const token = '';
   res.status(200).json({
     status: 'success',
     token: {},
+    data: {
+      user
+    }
   });
-};
+});
