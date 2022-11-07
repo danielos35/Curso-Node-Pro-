@@ -19,13 +19,13 @@ app.use(express.static(`${__dirname}/public`));
 
 // Middleware personalizado
 app.use((req, res, next) => {
-  console.log('Hola desde el middlwware');
   next();
 });
 
 // Middleware para manipular la data
 app.use((req, res, next) => {
   req.requesTime = new Date().toISOString();
+  console.log(req.headers);
   next();
 });
 

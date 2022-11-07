@@ -56,3 +56,23 @@ exports.login = catchAsync(async (req, res, next) => {
     token,
   });
 });
+
+exports.protect = catchAsync( async (req, res, next) => {
+
+  //1. Traer token y verificar su correcto funcionamiento
+  let token;
+  if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
+
+  if(!token){
+    return next(new AppError('No estás logeado en la aplicación',401));
+  }
+
+  // 2. Validar el token 
+
+  // 3. verificar si el usuario existe
+  
+  // 4. Verificar si el usuario cambió la contraseña
+  next();
+})

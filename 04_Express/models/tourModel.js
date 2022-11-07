@@ -115,12 +115,12 @@ tourShema.pre('save', function (next) {
 });
 
 tourShema.pre('save', function (next) {
-  console.log('Guardando documentos');
+  // console.log('Guardando documentos');
   next();
 });
 
 tourShema.post('save', function (doc, next) {
-  console.log(doc);
+  // console.log(doc);
   next();
 });
 
@@ -133,8 +133,8 @@ tourShema.pre(/^find/, function (next) {
 });
 
 tourShema.post(/^find/, function (docs, next) {
-  console.log(`Hecho en ${Date.now() - this.start}`);
-  console.log(docs);
+  // console.log(`Hecho en ${Date.now() - this.start}`);
+  // console.log(docs);
   next();
 });
 
@@ -142,7 +142,7 @@ tourShema.post(/^find/, function (docs, next) {
 // AGREGATION MIDDLEWARE
 tourShema.pre('aggregate', function(next){
   this.pipeline().unshift({ $match: { secretTour: { $ne:true }}})
-  console.log(this.pipeline); 
+  // console.log(this.pipeline); 
   next();
 })
 
