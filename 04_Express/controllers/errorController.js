@@ -29,6 +29,8 @@ const sendErrorProd = (err, res) => {
   }
 };
 
+const handleJWTErro = () => new AppError('Invalid toke. Please login again')
+
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
@@ -40,6 +42,7 @@ module.exports = (err, req, res, next) => {
     if (err.name === 'CastError') {
       error = handleCastErrorDB(error);
     }
+    if(err.name === 'JsonWebTokenError') error = handleJWTError(err)
     sendErrorProd(error, res);
   }
 };
