@@ -40,14 +40,12 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
 
   if (process.env.NODE_ENV === 'development') {
-    console.log(err.name);
     sendErrorDev(err, res);
     if (err.name === 'CastError') error = handleCastErrorDB(error);
     if(err.name === 'JsonWebTokenError') error = handleJWTError(err)
     if(err.name === 'TokenExpiredError') error = handleTokenExpiredError(err);
   } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
-    console.log(err.name);
     if (err.name === 'CastError') error = handleCastErrorDB(error);
     if(err.name === 'JsonWebTokenError') error = handleJWTError(err)
     if(err.name === 'TokenExpiredError') error = handleTokenExpiredError(err);
