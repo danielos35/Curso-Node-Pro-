@@ -72,10 +72,14 @@ exports.protect = catchAsync( async (req, res, next) => {
 
   // 2. Validar el token 
     // Todo lo que está dentro de promisify es una función que delvolverá una promesa
-  const decode = await promisify(jwt.verify)(token, process.env.JWT_SECRET); 
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET); 
 
   // 3. verificar si el usuario existe
   const freshUser = await User.findById(decoded.id);
+
+  if(!freshUser){
+    next(new AppError('El usuario no exite', 401))
+  }
   
 
   // 4. Verificar si el usuario cambió la contraseña
