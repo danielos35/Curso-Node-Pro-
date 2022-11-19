@@ -35,6 +35,7 @@ const userSchema = new mongoose.Schema({
       message: 'Las contraseñas ingresadas no coinciden',
     },
   },
+  passwordChangedAt: Date
 });
 
 userSchema.pre('save', async function (next) {
@@ -51,6 +52,15 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.correctPassword = async function(candidatePassword, userPassword) {
   return await bcrypt.compare(candidatePassword,userPassword);
+}
+
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp){
+  
+  if(this.passwordChangedAt){
+    
+  }
+  
+  return false
 }
 
 const User = mongoose.model('User', userSchema);
