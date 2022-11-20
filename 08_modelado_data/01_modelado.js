@@ -56,10 +56,28 @@ EXPLICACION
 ----- High read/write ratio (Hay mucha mas lectura que escritura en los datos)
 
 ---- NO NORMALIZAR
-
-
+---- Cuando los datos se acutalizan constantemente
+---- Low read/write ratio (Cuando se realiza mas escritura que lectura)
 
 -- Cercania de datos
+
+--- NORMALIZAR
+---- Cuando los datos no estan enteramente relacionados a los datos principales.
+
+--- NO NORMALIZAR
+----  Si los datos permanecen juntos de manera intriseca (se necesitan los unos a los otros) por ejemplo el correo electronico siempre permanece ligado a los datos generales de un usuario
+
+-- Tipos de referencias
+--- Child referencing: tenemos elementos relacionados a un elemento padre.
+--- Parent referencing: El subelemento se relaciona al elemento padre
+--- Two-way referencing: Se hace referencia al otro elemento relacionado, en cada uno de los datos que participan de la relación
+
+
+// NOTAS ////
+
+--  No se debe permitir que una matriz de datos crezca indefinidamente 
+
+
 
 
 
