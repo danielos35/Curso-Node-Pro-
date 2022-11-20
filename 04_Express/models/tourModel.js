@@ -98,6 +98,34 @@ const tourShema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+
+    // Mongo permite manejar datos geoespaciales de manera sencilla, mediante un formato llamado GeoJSON https://geojson.io/
+
+    startLocation: {
+      // GeoJSON
+      type:{
+        type:String,
+        default: 'Point',
+        enum: ['Point']
+      }, 
+      coordinate:[Number],
+      address: String, 
+      description: String
+    }, 
+
+    locations: [
+      {
+        type:{
+          type: String, 
+          default: 'Point', 
+          enum: ['Point']
+        },
+        coordinate:[Number],
+        address: String, 
+        description: String,
+        day:Number
+      }
+    ]
   },
   {
     toJSON: { virtuals: true },
