@@ -127,7 +127,12 @@ const tourShema = new mongoose.Schema(
         day:Number
       }
     ], 
-    guides: Array
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId, 
+        reference: 'User'
+      }
+    ]
   },
   {
     toJSON: { virtuals: true },
@@ -144,12 +149,17 @@ tourShema.pre('save', function (next) {
   next();
 });
 
-tourShema.pre('save', async function(next){
-  const guidesPromises = this.guides.map( async (id) => await user.findById(id));
+/*
+GUARDADO DE DATOS INCRUSTADOS
+El siguiente codigo es SOLO para guardado de datos por incrustación
+*/
+
+// tourShema.pre('save', async function(next){
+//   const guidesPromises = this.guides.map( async (id) => await user.findById(id));
   
-  // Metodo para esperar multiples promesas
-  this.guides = await Promise.all(guidesPromises); 
-})
+//   // Metodo para esperar multiples promesas
+//   this.guides = await Promise.all(guidesPromises); 
+// })
 
 tourShema.pre('save', function (next) {
   // console.log('Guardando documentos');
