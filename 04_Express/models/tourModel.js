@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 const validator = require('validator');
+const user = require('./userModel')
 
 // Esquema para mongoose
 const tourShema = new mongoose.Schema(
@@ -125,7 +126,8 @@ const tourShema = new mongoose.Schema(
         description: String,
         day:Number
       }
-    ]
+    ], 
+    guides: Array
   },
   {
     toJSON: { virtuals: true },
@@ -141,6 +143,13 @@ tourShema.pre('save', function (next) {
   this.slug = slugify(this.name, { lowe: true });
   next();
 });
+
+tourShema.pre('save', async function(next){
+  const guidesPromises = this.guides.map( async (id) => await user.findById(id));
+  
+  // Metodo para esperar multiples promesas
+  this.guides = await Promise.all(guidesPromises); 
+})
 
 tourShema.pre('save', function (next) {
   // console.log('Guardando documentos');
