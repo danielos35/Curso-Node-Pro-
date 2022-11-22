@@ -29,7 +29,9 @@ exports.getALLTours = catchAsync(async (req, res, next) => {
 });
 
 exports.getTour = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id);
+  
+  // Agregar datos guardados por referencia
+  const tour = await Tour.findById(req.params.id).populate('guides');
 
   if (!tour) {
     return next(new AppError('No se encontró un tour con ese ID', 404));
