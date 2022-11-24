@@ -38,6 +38,19 @@ const reviewSchema =  new mongoose.Schema( {
     toObject: { virtuals: true },
 }
 )
+
+
+reviewSchema.pre( /^find/, function( next ){
+    this.populate(
+      
+      //Podemos pasar un objeto de configuración donde la llave path es el nombre del elemento y select los elementos que queremos eliminar con la preposición - 
+      {
+      path:'user'
+      }
+    );
+    next();
+  })
+  
     
 const review = mongoose.model('Review', reviewSchema);
 module.exports = review;
