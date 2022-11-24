@@ -4,7 +4,7 @@ const validator = require('validator');
 const user = require('./userModel')
 
 // Esquema para mongoose
-const tourShema = new mongoose.Schema(
+const tourSchema = new mongoose.Schema(
   {
     /*
     
@@ -140,11 +140,11 @@ const tourShema = new mongoose.Schema(
   }
 );
 
-tourShema.virtual('durationWeeks').get(function () {
+tourSchema.virtual('durationWeeks').get(function () {
   return this.duration / 7;
 });
 
-tourShema.pre('save', function (next) {
+tourSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lowe: true });
   next();
 });
@@ -161,25 +161,40 @@ El siguiente codigo es SOLO para guardado de datos por incrustación
 //   this.guides = await Promise.all(guidesPromises); 
 // })
 
-tourShema.pre('save', function (next) {
+tourSchema.pre('save', function (next) {
   // console.log('Guardando documentos');
   next();
 });
 
-tourShema.post('save', function (doc, next) {
+tourSchema.post('save', function (doc, next) {
   // console.log(doc);
   next();
 });
 
 // Query Middleware
 
-tourShema.pre(/^find/, function (next) {
+tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
   this.start = Date.now();
   next();
 });
 
-tourShema.post(/^find/, function (docs, next) {
+
+// Para hacer el caracter de acento circunflejo se utiliza alt + 94 ^ 
+
+tourSchema.pre( /^find/, function( next ){
+  this.populate(
+    
+    //Podemos pasar un objeto de configuración donde la llave path es el nombre del elemento y select los elementos que queremos eliminar con la preposición - 
+    {
+    path:'guides', 
+    select:'-__v -email'
+    }
+  );
+  next();
+})
+
+tourSchema.post(/^find/, function (docs, next) {
   // console.log(`Hecho en ${Date.now() - this.start}`);
   // console.log(docs);
   next();
@@ -187,12 +202,12 @@ tourShema.post(/^find/, function (docs, next) {
 
 
 // AGREGATION MIDDLEWARE
-tourShema.pre('aggregate', function(next){
+tourSchema.pre('aggregate', function(next){
   this.pipeline().unshift({ $match: { secretTour: { $ne:true }}})
   // console.log(this.pipeline); 
   next();
 })
 
-const Tour = mongoose.model('Tour', tourShema);
+const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
