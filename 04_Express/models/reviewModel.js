@@ -41,18 +41,25 @@ const reviewSchema =  new mongoose.Schema( {
 
 
 reviewSchema.pre( /^find/, function( next ){
-    this.populate(
+    
+    // this.populate(
       
-      //Podemos pasar un objeto de configuración donde la llave path es el nombre del elemento y select los elementos que queremos eliminar con la preposición - 
-      {
-      path:'user'
-      }
-    ).populate(
+    //   //Podemos pasar un objeto de configuración donde la llave path es el nombre del elemento y select los elementos que queremos eliminar con la preposición - 
+    //   {
+    //   path:'user'
+    //   }
+    // ).populate(
+    //     {
+    //         path:'tour', 
+    //         select:'name'
+    //     }
+    // );
+
+    this.populate(
         {
-            path:'tour', 
-            select:'name'
+        path:'user'
         }
-    );
+    )
 
     next();
   })
