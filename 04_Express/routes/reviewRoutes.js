@@ -2,8 +2,8 @@ const express = require('express');
 const reviewController = require('../controllers/reviewController');
 const authController = require('../controllers/authController')
 
-const router = express.Router();
-
+// Con esta configuración podemos realizar un merge de las rutas usadas (ver linea 13 del tour routes)
+const router = express.Router( { mergeParams: true } );
 router
     .route('/')
     .get(reviewController.getAllReviews)
