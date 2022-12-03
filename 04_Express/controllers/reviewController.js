@@ -24,5 +24,6 @@ exports.createReview = catchAsync( async (req, res, next) => {
     res.status(201).json({status: 'success', data:{review: newReview}});
 })
 
+exports.updateReview = factory.updateOne(Review);   
 exports.deleteReview = factory.deleteOne(Review);
 

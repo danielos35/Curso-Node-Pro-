@@ -28,12 +28,14 @@ exports.createUser = (req, res) => {
   });
 };
 
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is no yet defined',
-  });
-};
+exports.updateUser = factory.updateOne(User);
+
+// exports.updateUser = (req, res) => {
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'This route is no yet defined',
+//   });
+// };
 
 exports.deleteUser = factory.deleteOne(User);
 
