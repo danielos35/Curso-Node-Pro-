@@ -29,20 +29,22 @@ exports.getALLTours = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getTour = catchAsync(async (req, res, next) => {
+exports.getTour = factory.getOne(Tour,{ path: 'reviews' });
+
+// exports.getTour = catchAsync(async (req, res, next) => {
   
-  // Agregar datos guardados por referencia
-  const tour = await Tour.findById(req.params.id).populate('reviews');
+//   // Agregar datos guardados por referencia
+//   const tour = await Tour.findById(req.params.id).populate('reviews');
 
-  if (!tour) {
-    return next(new AppError('No se encontró un tour con ese ID', 404));
-  }
+//   if (!tour) {
+//     return next(new AppError('No se encontró un tour con ese ID', 404));
+//   }
 
-  res.status(200).json({
-    status: 'petición exitosa',
-    data: { tour },
-  });
-});
+//   res.status(200).json({
+//     status: 'petición exitosa',
+//     data: { tour },
+//   });
+// });
 
 
 exports.createTour = factory.createOne(Tour);

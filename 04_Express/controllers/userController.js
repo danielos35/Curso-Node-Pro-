@@ -14,12 +14,14 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getUser = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is no yet defined',
-  });
-};
+exports.getUser = factory.getOne(User)
+
+// exports.getUser = (req, res) => {
+//   res.status(500).json({
+//     status: 'error',
+//     message: 'This route is no yet defined',
+//   });
+// };
 
 exports.createUser = (req, res) => {
   res.status(500).json({
