@@ -2,17 +2,18 @@ const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
+exports.getAllUsers = factory.getAll(User);
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-  res.status(200).json({
-    status: 'Consulta exitosa',
-    results: users.length,
-    data: {
-      users,
-    },
-  });
-});
+// exports.getAllUsers = catchAsync(async (req, res, next) => {
+//   const users = await User.find();
+//   res.status(200).json({
+//     status: 'Consulta exitosa',
+//     results: users.length,
+//     data: {
+//       users,
+//     },
+//   });
+// });
 
 exports.getUser = factory.getOne(User)
 
