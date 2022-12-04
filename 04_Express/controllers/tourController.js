@@ -11,23 +11,25 @@ exports.aliasTopTours = async (req, res, next) => {
   next();
 };
 
-exports.getALLTours = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(Tour.find(), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
+exports.getALLTours = factory.getAll(Tour);
 
-  const tours = await features.query;
+// exports.getALLTours = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(Tour.find(), req.query)
+//     .filter()
+//     .sort()
+//     .limitFields()
+//     .paginate();
 
-  res.status(200).json({
-    status: 'Consulta exitosa',
-    results: tours.length,
-    data: {
-      tours,
-    },
-  });
-});
+//   const tours = await features.query;
+
+//   res.status(200).json({
+//     status: 'Consulta exitosa',
+//     results: tours.length,
+//     data: {
+//       tours,
+//     },
+//   });
+// });
 
 exports.getTour = factory.getOne(Tour,{ path: 'reviews' });
 

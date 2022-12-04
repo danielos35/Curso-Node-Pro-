@@ -19,7 +19,6 @@ exports.deleteOne = Model =>
 
 })
 
-
 exports.updateOne = Model => catchAsync(async (req, res, next) => {
   const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -60,6 +59,11 @@ exports.getOne = (Model, popOptions) => catchAsync(async (req, res, next) => {
 });
 
 exports.getAll = Model => catchAsync(async (req, res, next) => {
+
+  // Para reviews
+  let filter = {};
+  if(req.params.tourId) filter = { tour: req.params.tourId } 
+
   const features = new APIFeatures(Model.find(), req.query)
     .filter()
     .sort()
