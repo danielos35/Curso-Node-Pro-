@@ -2,6 +2,13 @@ const User = require('./../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
+
+// User data
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.getAllUsers = factory.getAll(User);
 
 // exports.getAllUsers = catchAsync(async (req, res, next) => {
